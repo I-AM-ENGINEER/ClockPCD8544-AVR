@@ -6,6 +6,7 @@
         "stdlib.h": "c",
         "stdint.h": "c",
         "eeprom.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "pgmspace.h": "c"
     }
 }
