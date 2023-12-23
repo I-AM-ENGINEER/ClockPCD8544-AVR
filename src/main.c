@@ -67,13 +67,6 @@ void usart_send_byte( uint8_t data ){
 	UDR0 = data;
 }
 
-void usart_send_str( const char* str ){
-	while(*str){
-		usart_send_byte((char)*str);
-		str++;
-	}
-}
-
 void usart_rx_complete_irq( char *buffer ){
 	set_system_time((time_t)atol(buffer));
 }
@@ -300,7 +293,8 @@ ISR(USART0_RX_vect){ // Прерывание при приеме байта по
 	static uint8_t usart_rx_len;
 	uint8_t received_byte = UDR0;
 	usart_send_byte(received_byte);
-	usart_rx_buffer[usart_rx_len++] = received_byte;
+	usart_rx_buffer[usart_rx_len] = received_byte;
+	usart_rx_len++;
 	// Проверяем на терминирующий символ, или выход за пределы стека
 	if(	(received_byte == '\0') ||\
 		(received_byte == '\r') ||\
